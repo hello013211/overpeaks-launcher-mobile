@@ -1,0 +1,27 @@
+name: Build Unity Android APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Unity Builder
+        uses: game-ci/unity-builder@v2
+        with:
+          unityVersion: '2022.3.20f1'
+          targetPlatform: 'Android'
+          buildPath: 'build/android'
+          buildName: 'Overpeaks.apk'
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: overpeaks-apk
+          path: build/android/Overpeaks.apk
